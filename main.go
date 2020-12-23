@@ -1,13 +1,16 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	//"fmt"
+	"github.com/GoREST/go-rest-api-gin/handler"
+	"github.com/GoREST/go-rest-api-gin/newsfeed"
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
 	server := gin.Default()
-	server.GET("/test", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "OK",
-		})
-	})
+	feed := newsfeed.New()
+	server.GET("/newsfeed", handler.NewsfeedGet(feed))
+	server.POST("/newsfeed", handler.NewsfeedPost())
 	server.Run(":8080")
 }
